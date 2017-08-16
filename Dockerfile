@@ -19,6 +19,7 @@ RUN apt-get update -q \
 RUN pip install -U \
     pip \
     setuptools>=36 \
+    rarfile \
     flexget
 
 # Add service files.
@@ -26,6 +27,8 @@ ADD init/ /etc/my_init.d/
 ADD services/ /etc/service/
 RUN chmod -v +x /etc/service/*/run
 RUN chmod -v +x /etc/my_init.d/*.sh
+# Make it easy to run `docker exec`, without the need of config path
+RUN ln -s /config /root/.flexget
 
 EXPOSE 5050/tcp
 
