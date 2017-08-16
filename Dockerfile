@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.19
+FROM phusion/baseimage:0.9.22
 RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM screen
@@ -28,13 +28,12 @@ ADD init/ /etc/my_init.d/
 ADD services/ /etc/service/
 RUN chmod -v +x /etc/service/*/run
 RUN chmod -v +x /etc/my_init.d/*.sh
+
 # Make it easy to run `docker exec`, without the need of config path
 RUN ln -s /config /root/.flexget
-
-EXPOSE 5050/tcp
 
 VOLUME /config
 
 # Add user.
-RUN useradd -u 911 -U -s /bin/false abc \
+RUN useradd -u 1026 -U -s /bin/false abc \
  && usermod -G users abc
